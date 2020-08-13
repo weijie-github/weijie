@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			textarea{
+				width: 70%;
+				height: 60px;
+				resize: none;
+				font-size: 20px;
+				text-indent:40px;
+				border: 2px salmon solid;
+			}
+			.clearfix::after{
+				display: table;
+				content: '';
+				clear: both;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="liuyyan">
+		<textarea autofocus="autofocus" id="textareas">
+		</textarea>
+		<button type="button" v-on:click="fabiao()">发表</button>
+		<h1>留言</h1>
+		<hr>
+		<div v-for="(item,index) in liulists">
+			
+			<p style="font-size: 23px;" class="clearfix">
+				<span style="float: left;">{{item.text}}</span>
+				<span style="float: right;width: 20px;height: 20px;border: 1px solid red;text-align: center;line-height:20px;" v-on:click="del(index)">x</span>
+			</p>
+			<p class="clearfix">
+				<span style="float: left;">游客:{{item.name}}</span>
+				
+				<span style="float: right;">date:{{item.date}}</span>
+			</p>
+		</div>
+		</div>
+	</body>
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		new Vue({
+			el:'#liuyyan',
+			data:{
+				liulists:[
+					{
+						text:'我很喜欢你的表达',
+						name:'',
+						date:'2020年08月11号 20:22'
+					},
+					{
+						text:'今天天气不错',
+						name:'',
+						date:'2020年08月13号 21:21'
+					},
+					{
+						text:'giao',
+						name:'',
+						date:'2020年08月15号 22:45'
+					},
+				]
+			},
+			methods:{
+				fabiao(){
+					var text=$('#textareas').val();
+					var date1=new Date();
+					var data2=new Date(date1.getTime());
+					var year=data2.getFullYear();
+					var Month=data2.getMonth()+1;
+					var day=data2.getDay();
+					var hours=data2.getHours();
+					var minutes=data2.getMinutes();
+					if(Month<10){
+						var Month="0"+Month;
+					}
+					if(day<10){
+						var day="0"+day;
+					}
+					if(hours<10){
+						var hours="0"+hours;
+					}
+					if(minutes<10){
+						var minutes="0"+minutes;
+					}
+					var date=year+"年"+Month+"月"+day+"号 "+hours+":"+minutes;
+					var newlists={
+						text:text,
+						name:'',
+						date:date
+					}
+					this.liulists.push(newlists);
+					$('#textareas').val("");
+				},
+				del(index){
+					  this.liulists.splice(index,1);
+				}
+			}
+		})
+	</script>
+</html>
